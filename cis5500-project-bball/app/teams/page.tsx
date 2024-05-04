@@ -3,10 +3,11 @@
 import "./teams.css";
 import {useEffect, useState} from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
 
-    const [teams, setTeams] = useState([{Name: "Loading", Conference: "Loading", Division: "Loading"}]);
+    const [teams, setTeams] = useState([{Name: "Loading", Conference: "Loading", Division: "Loading", TeamID: "Loading"}]);
 
     /*let teamsHtml = 
         ([<tr key = {0}>
@@ -52,21 +53,25 @@ export default function Page() {
                 <tbody>
                     {teams.map((team, index) => (
                         <tr key = {index}>
-                            <td className = "TeamsPage-table-team">
-                                
-                                <div className = "TeamsPage-table-team-logo">
-                                    {team.Name !== "Loading" ? <Image src = {`https://cdn.nba.com/logos/nba/${team.TeamID}/primary/L/logo.svg`}
-                                    style={{
-                                        width: '100%',
-                                        height: 'auto',
-                                    }}
-                                    width={500}
-                                    height={300}
-                                    alt = "Photo of player">
-                                    </Image> : null}
-                                    
-                                </div>
-                                <div className = "TeamsPage-table-team-name">{team.Name}</div>
+                                <td className = "TeamsPage-table-team">
+                                <Link href = {`/teams/${team.TeamID}`}>
+                                    <div className = "TeamsPage-table-team-logo">
+                                        {team.Name !== "Loading" ? <Image src = {`https://cdn.nba.com/logos/nba/${team.TeamID}/primary/L/logo.svg`}
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                        }}
+                                        width={500}
+                                        height={300}
+                                        alt = "Photo of player">
+                                        </Image> : null}
+                                        
+                                    </div>
+                                </Link>
+                                <Link href = {`/teams/${team.TeamID}`} >
+                                    <div className = "TeamsPage-table-team-name">{team.Name}</div>
+                                </Link>
+
                                 </td>
                             <td className = "TeamsPage-table-conference">{team.Conference}</td>
                             <td className = "TeamsPage-table-division">{team.Division}</td>
