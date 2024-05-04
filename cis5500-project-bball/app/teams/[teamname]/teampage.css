@@ -1,0 +1,27 @@
+.TeamPage {
+    margin: 40px 40px 0px 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.TeamPage-top{
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+}
+
+.TeamPage-top-img{
+    width: 200px;
+}
+
+.TeamPage-top-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.TeamPage-top-name {
+    font-size: 2rem;
+    font-weight: bold;
+}

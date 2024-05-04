@@ -52,7 +52,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  gap: 4px;
   align-items: center;
 }
 
@@ -65,7 +64,7 @@ body {
   border-color: gray;
 }
 
-.TopBar-logo-link{
+.TopBar-link{
   text-decoration: none;
   color: inherit;
 }

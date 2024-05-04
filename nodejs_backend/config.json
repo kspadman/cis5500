@@ -1,0 +1,9 @@
+{
+    "rds_host": "database-finalproject.cducsgi4sslh.us-east-2.rds.amazonaws.com",
+    "rds_port": "3306",
+    "rds_user": "brucexu",
+    "rds_password": "Aa13817485017",
+    "rds_db": "finalProject",
+    "server_host": "localhost",
+    "server_port": "3001"
+  }

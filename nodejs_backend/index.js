@@ -1,6 +1,15 @@
 const express = require('express');
+const cors = require('cors');
+const config = require("./config");
+const routes = require("./routes");
+
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+app.use(cors({
+    origin: '*',
+  })); //Change later, this is potentially a security issue
+  
+const PORT = config.server_port;
 
 app.get('/api/user', (req, res) => {
   res.json({ name: 'John Doe' });
