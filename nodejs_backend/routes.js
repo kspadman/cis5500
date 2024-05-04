@@ -11,5 +11,3 @@ const connection = mysql.createConnection({
   port: config.rds_port,
   database: config.rds_db
 });
-
-connection.connect((err) => err && console.log(err));
