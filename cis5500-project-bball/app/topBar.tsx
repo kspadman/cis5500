@@ -8,7 +8,7 @@ export default function TopBar() {
     return(
     <div className = "TopBar">
         <div className = "TopBar-left">
-            <Link href = "/" className = "TopBar-logo-link">
+            <Link href = "/" className = "TopBar-link">
                 <div className = "TopBar-logo">
                     <div className = "TopBar-logo-img">
                         <Image src = "/pennlogo.png" width = {50} height = {30} alt = "Logo of University of Pennsylvania"></Image>
@@ -21,10 +21,14 @@ export default function TopBar() {
         <div className = "TopBar-right" >
             <div className = "TopBar-buttons">
                 <div className = "TopBar-players">
-                    Players
+                    <Link href = "/players" className = "TopBar-link">
+                        Players
+                    </Link>
                 </div>
                 <div className = "TopBar-teams">
-                    Teams
+                    <Link href = "/teams" className = "TopBar-link">
+                        Teams
+                    </Link>
                 </div>
             </div>
         </div>

@@ -1,3 +1,5 @@
 export default function Page() {
-    return <p>Player</p>
+    return <div className = "players-body">
+        
+    </div>
 }

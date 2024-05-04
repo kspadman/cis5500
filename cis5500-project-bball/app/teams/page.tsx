@@ -1,3 +1,7 @@
+import "./teams.css";
+
 export default function Page() {
-    return <p>Teams</p>
+    return <div className ="Teams-body">
+
+    </div>
 }
