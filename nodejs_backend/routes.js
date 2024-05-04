@@ -57,6 +57,21 @@ const teams = async function(req, res) {
   });
 }
 
+const players = async function(req, res) {
+  connection.query(`
+    SELECT *
+    FROM Players
+    ORDER BY PlayerName ASC
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 const search_players = async function(req, res) {
   connection.query(`
     SELECT *
@@ -120,6 +135,7 @@ module.exports = {
   player,
   team,
   teams,
+  players,
   search_players,
   top_scorers
 }

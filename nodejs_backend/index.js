@@ -15,6 +15,7 @@ app.get('/api/user', (req, res) => {
   res.json({ name: 'John Doe' });
 });
 
+app.get('/players', routes.players);
 app.get('/player/:player_id', routes.player);
 app.get('/team/:team_id', routes.team);
 app.get('/teams', routes.teams);
