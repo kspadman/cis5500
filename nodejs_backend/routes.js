@@ -13,10 +13,12 @@ const connection = mysql.createConnection({
 });
 
 const player = async function(req, res) {
+    var player_id = req.params.player_id;
+    player_id = 1628369;
   connection.query(`
     SELECT *
     FROM Players
-    WHERE PlayerID = '${req.params.player_id}'
+    WHERE PlayerID = '${player_id}'
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -27,3 +29,6 @@ const player = async function(req, res) {
   });
 }
 
+module.exports = {
+    player
+}

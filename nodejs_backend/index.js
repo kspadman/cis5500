@@ -15,9 +15,9 @@ app.get('/api/user', (req, res) => {
   res.json({ name: 'John Doe' });
 });
 
-app.get('/player/:player_id', routes.player);
-app.get('/team/:team_id', routes.team);
-app.get('/top_players', routes.top_players);
+app.get('/players/:player_id', routes.player);
+//app.get('/team/:team_id', routes.team);
+//app.get('/top_players', routes.top_players);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

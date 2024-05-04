@@ -6,9 +6,9 @@ import {useEffect, useState } from "react";
 
 export default function Page({params} : {params: {playername: string}}) {
 
-    const [player, setPlayer] = useState(null);
+    const [player, setPlayer] = useState("jaysontatum");
 
-        useEffect(() => {    fetch('http://localhost:3001/api/user', )
+        useEffect(() => {    fetch(`http://localhost:3001/players/${player}`, )
             .then(res => res.json())
             .then(data => {
                 console.log(data);
