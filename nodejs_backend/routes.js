@@ -11,3 +11,19 @@ const connection = mysql.createConnection({
   port: config.rds_port,
   database: config.rds_db
 });
+
+const player = async function(req, res) {
+  connection.query(`
+    SELECT *
+    FROM Players
+    WHERE PlayerID = '${req.params.player_id}'
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
+
