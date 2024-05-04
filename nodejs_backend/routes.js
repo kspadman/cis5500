@@ -29,6 +29,40 @@ const player = async function(req, res) {
   });
 }
 
-module.exports = {
-    player
+const team = async function(req, res) {
+  connection.query(`
+    SELECT *
+    FROM Teams
+    WHERE TeamID = '${req.params.team_id}'
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
 }
+
+const teams = async function(req, res) {
+  connection.query(`
+    SELECT *
+    FROM Teams
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+module.exports = {
+  player,
+  team,
+  teams
+}
+
+
+
