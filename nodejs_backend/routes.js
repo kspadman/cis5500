@@ -73,11 +73,56 @@ const search_players = async function(req, res) {
   });
 }
 
+// COMPLEX #1
+const top_scorers = async function(req, res) {
+  connection.query(`
+  SELECT 
+  team.Name AS TeamName,
+  player.Name,
+  pp.MaxPPG
+  FROM Teams team
+  JOIN (
+    SELECT 
+        ppg.TEAM_ID, 
+        MAX(ppg.PPG) AS MaxPPG
+    FROM (
+        SELECT 
+            ps.PlayerID,
+            game.TEAM_ID,
+            AVG(ps.Points) AS PPG
+        FROM PlayerStats ps
+        JOIN Games game ON ps.GameID = game.GAME_ID
+        GROUP BY ps.PlayerID, game.TEAM_ID
+    ) ppg
+    GROUP BY ppg.TEAM_ID
+  ) pp ON team.TeamID = pp.TEAM_ID
+  JOIN (
+    SELECT 
+        ps.PlayerID,
+        game.TEAM_ID,
+        AVG(ps.Points) AS PPG
+    FROM PlayerStats ps
+    JOIN Games game ON ps.GameID = game.GAME_ID
+    GROUP BY ps.PlayerID, game.TEAM_ID
+  ) ppg ON team.TeamID = ppg.TEAM_ID AND pp.MaxPPG = ppg.PPG
+  JOIN Players player ON ppg.PlayerID = player.PlayerID
+  ORDER BY team.Name;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   player,
   team,
   teams,
-  search_players
+  search_players,
+  top_scorers
 }
 
 

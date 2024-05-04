@@ -19,7 +19,7 @@ app.get('/player/:player_id', routes.player);
 app.get('/team/:team_id', routes.team);
 app.get('/teams', routes.teams);
 app.get('search_players', routes.search_players);
-// app.get('/top_scorers', routes.top_scorers);
+app.get('/top_scorers', routes.top_scorers);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
