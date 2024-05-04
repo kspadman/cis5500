@@ -1,0 +1,16 @@
+.PlayerPage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.PlayerPage-top{
+    display: flex;
+    flex-direction: row;
+}
+
+.PlayerPage-top-description {
+    display: flex;
+    flex-direction: column;
+}

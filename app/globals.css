@@ -1,0 +1,71 @@
+
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+
+body {
+  margin: 0px;
+  color: rgb(var(--foreground-rgb));
+  
+}
+
+.TopBar {
+  box-sizing: border-box;
+  height: 60px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-bottom: 1px solid;
+}
+
+.TopBar-left {
+  height: 100%;
+}
+
+.TopBar-right {
+  display: flex;
+
+}
+
+.TopBar-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+}
+.TopBar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.TopBar-logo{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 4px;
+  align-items: center;
+}
+
+.TopBar-search {
+  width: 700px;
+  height: 42px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 1rem;
+  border-color: gray;
+}
+
+.TopBar-logo-link{
+  text-decoration: none;
+  color: inherit;
+}
