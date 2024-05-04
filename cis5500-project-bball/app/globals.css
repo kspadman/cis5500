@@ -44,8 +44,9 @@ body {
   gap: 30px;
 }
 .TopBar-left {
+  padding-top: 7px;
   display: flex;
-  align-items: center;
+  align-items: top;
   gap: 10px;
 }
 
@@ -57,12 +58,17 @@ body {
 }
 
 .TopBar-search {
-  width: 700px;
-  height: 42px;
-  border: 1px solid;
+  max-width: 100%;
+  min-height: 42px;
   border-radius: 8px;
   font-size: 1rem;
-  border-color: gray;
+  padding-left: 10px;
+  border: none;
+  z-index: 2;
+}
+
+input:focus{
+  outline: none;
 }
 
 .TopBar-link{
@@ -73,4 +79,40 @@ body {
 a{
   text-decoration: none;
   color: inherit;
+}
+
+
+.TopBar-search-parent {
+  width: 712px;
+  display: flex;
+  flex-direction: column;
+}
+
+.TopBar-search-results {
+  margin-top: -12px;
+  border-radius: 8px;
+  border: solid 1px;
+  background-color: white;
+  color: black;
+  width: 100%;
+  z-index: 0;
+}
+
+.TopBar-search-result-player {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+}
+
+.TopBar-search-result-player-left {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
+.TopBar-search-result-player-img{
+  font-size: .6rem;
+  width: 60px;
 }
