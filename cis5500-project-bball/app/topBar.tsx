@@ -11,7 +11,12 @@ export default function TopBar() {
             <Link href = "/" className = "TopBar-link">
                 <div className = "TopBar-logo">
                     <div className = "TopBar-logo-img">
-                        <Image src = "/pennlogo.png" width = {50} height = {30} alt = "Logo of University of Pennsylvania"></Image>
+                        <Image src = "/pennlogo.png" style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
+                        width={50}
+                        height={100} alt = "Logo of University of Pennsylvania"></Image>
                     </div>
                     <div className = "TopBar-logo-name">PennBall</div>
                 </div>

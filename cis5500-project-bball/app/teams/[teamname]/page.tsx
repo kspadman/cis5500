@@ -23,7 +23,7 @@ export default function Page({params} : {params: {teamname: string}}) {
                 <div className = "TeamPage-top-info">Eastern Conference | Atlantic Division</div>
                 <div className = "TeamPage-top-stat-summary">
                     <div className = "TeamPage-top-stat-division"></div>
-
+                            
                 </div>
             </div>
         </div>
