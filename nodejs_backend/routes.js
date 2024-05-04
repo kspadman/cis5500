@@ -170,6 +170,46 @@ const team_win_rates = async function(req, res) {
   });
 }
 
+// COMPLEX #3
+const top_players_variance = async function(req, res) {
+  connection.query(`
+  WITH PlayerGames AS (
+    SELECT
+        stats.PlayerID,
+        stats.GameID,
+        stats.Points
+    FROM PlayerStats stats
+  ), PlayerAvgPoints AS (
+      SELECT
+          PlayerID,
+          AVG(Points) AS AvgPoints
+      FROM PlayerGamePoints
+      GROUP BY PlayerID
+  ), PlayerVariance AS (
+      SELECT
+          p.PlayerID,
+          SUM(POWER(pgp.Points - p.AvgPoints, 2)) / COUNT(pgp.GameID) AS Variance
+      FROM PlayerGames pgp
+      INNER JOIN PlayerAvgPoints p ON pgp.PlayerID = p.PlayerID
+      GROUP BY p.PlayerID
+  )
+  SELECT
+      player .Name,
+      pv.Variance
+  FROM PlayerVariance playervariance
+  JOIN Players player ON playervariance.PlayerID = player .PlayerID
+  ORDER BY playervariance.Variance DESC
+  LIMIT 10
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   player,
   team,
@@ -177,7 +217,8 @@ module.exports = {
   players,
   search_players,
   top_scorers,
-  team_win_rates
+  team_win_rates,
+  top_players_variance
 }
 
 
