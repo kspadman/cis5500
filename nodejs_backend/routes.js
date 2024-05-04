@@ -13,20 +13,19 @@ const connection = mysql.createConnection({
 });
 
 const player = async function(req, res) {
-    var player_id = req.params.player_id;
-    player_id = 1628369;
-  connection.query(`
-    SELECT *
-    FROM Players
-    WHERE PlayerID = '${player_id}'
-  `, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data[0]);
-    }
-  });
+    const player_id = req.params.player_id;
+    connection.query(`
+        SELECT *
+        FROM Players
+        WHERE PlayerID = '${player_id}'
+    `, (err, data) => {
+        if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+        } else {
+        res.json(data[0]);
+        }
+    });
 }
 
 module.exports = {

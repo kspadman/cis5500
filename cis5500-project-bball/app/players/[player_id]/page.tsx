@@ -1,0 +1,69 @@
+"use client";
+
+import "./playerpage.css";
+import Image from "next/image";
+import {useEffect, useState } from "react";
+
+export default function Page({params} : {params: {player_id: string}}) {
+
+    const [player_id, setPlayer_id] = useState(params.player_id);
+
+    //Before data is loaded, indicate it is loading
+    const [player, setPlayer] = useState({
+        Name: "Loading", 
+        Position: "Loading",
+        Height: "Loading",
+        Country: "Loading",
+        CollegeID: "Loading",
+        BirthDate: "Loading"
+    });
+
+    useEffect(() => {    fetch(`http://localhost:3001/players/${player_id}`, )
+        .then(res => res.json())
+        .then(data => {
+            //Format height
+            data.Height = data.Height.toString()[0] + "' " + data.Height.toString().substring(1) + "\""
+
+            //Format date
+            data.BirthDate = new Date(Date.parse(data.BirthDate));
+            data.BirthDate = (data.BirthDate.getMonth() + 1).toString() + "/" + 
+                data.BirthDate.getDate().toString() + "/" + data.BirthDate.getFullYear().toString();
+
+            setPlayer(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, [])
+
+    var img_src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${player_id}.png`
+
+    //Team and player number still not working
+      
+    return <div className = "PlayerPage">
+        <div className = "PlayerPage-top">
+            <div className = "PlayerPage-top-img">
+                <Image src = {img_src} style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
+                        width={500}
+                        height={300}
+                    alt = "Photo of player">
+
+                </Image>
+            </div>
+            <div className = "PlayerPage-top-description">
+                <div className = "PlayerPage-top-name">{player.Name}</div>
+                <div className = "PlayerPage-top-info">Boston Celtics | #0 | {player.Position}</div>
+                <div className = "PlayerPage-top-stat-summary">
+                    <div className = "PlayerPage-top-stat-height">Height: {player.Height}</div>
+                    <div className = "PlayerPage-top-stat-nationality">Nationality: {player.Country}</div>
+                    <div className = "PlayerPage-top-stat-college">College: {player.CollegeID}</div>
+                    <div className = "PlayerPage-top-stat-birthday">Birthday: {player.BirthDate}</div>
+
+                </div>
+            </div>
+        </div>
+        <div className = "PlayerPage-content"></div>
+
+    </div>
+}
