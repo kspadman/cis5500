@@ -21,6 +21,7 @@ app.get('/team/:team_id', routes.team);
 app.get('/teams', routes.teams);
 app.get('/search_players', routes.search_players);
 app.get('/top_scorers', routes.top_scorers);
+app,get('/team_win_rates', routes.team_win_rates);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

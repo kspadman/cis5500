@@ -131,13 +131,53 @@ const top_scorers = async function(req, res) {
   });
 }
 
+// COMPLEX #2
+const team_win_rates = async function(req, res) {
+  connection.query(`
+  WITH TeamWinRates AS (
+    SELECT
+        t.TeamID,
+        SUM(CASE WHEN g.WL = 'W' THEN 1 ELSE 0 END) AS Wins,
+        COUNT(*) AS TotalGames,
+        AVG(CASE WHEN g.WL = 'W' THEN 1 ELSE 0 END) AS WinPercentage
+    FROM Teams t
+    JOIN Games g ON t.TeamID = g.TEAM_ID
+    JOIN (
+        SELECT
+            TEAM_ID,
+            AVG(CASE WHEN g.WL = 'W' THEN 1 ELSE 0 END) AS OpponentWinRate
+        FROM Games g
+        JOIN Teams t ON g.OTHER_TEAM_ID = t.TeamID
+        GROUP BY TEAM_ID
+    ) ow ON t.TeamID = ow.TEAM_ID
+    GROUP BY t.TeamID
+  )
+  SELECT
+      t.Name AS TeamName,
+      twr.Wins,
+      twr.TotalGames,
+      twr.WinPercentage
+  FROM Teams t
+  JOIN TeamWinRates twr ON t.TeamID = twr.TeamID
+  ORDER BY WinPercentage DESC;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   player,
   team,
   teams,
   players,
   search_players,
-  top_scorers
+  top_scorers,
+  team_win_rates
 }
 
 
