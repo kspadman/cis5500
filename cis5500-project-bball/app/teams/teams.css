@@ -1,0 +1,55 @@
+.TeamsPage {
+    margin: 40px 50px 0px 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.TeamsPage-top{
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    font-size: 2rem;
+}
+
+.TeamsPage-top-img{
+    width: 200px;
+}
+
+.TeamsPage-top-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.TeamsPage-top-name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.TeamsPage-table {
+    margin-top: 30px;
+}
+
+.TeamsPage th {
+    text-align: left;
+
+}
+
+.TeamsPage td {
+    width: 300px;
+    height: 40px;
+    padding-top: 16px;
+}
+
+
+.TeamsPage-table-team-logo {
+    width: 54px;
+}
+
+.TeamsPage-table-team {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}

@@ -16,7 +16,7 @@ app.get('/api/user', (req, res) => {
 });
 
 app.get('/players', routes.players);
-app.get('/player/:player_id', routes.player);
+app.get('/players/:player_id', routes.player);
 app.get('/team/:team_id', routes.team);
 app.get('/teams', routes.teams);
 app.get('/search_players', routes.search_players);

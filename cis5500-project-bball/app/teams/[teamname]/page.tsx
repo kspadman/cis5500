@@ -8,12 +8,12 @@ export default function Page({params} : {params: {teamname: string}}) {
 
 <div className = "TeamPage-top">
             <div className = "TeamPage-top-img">
-                <Image src = "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg" style={{
+                <Image src = {`https://cdn.nba.com/logos/nba/${1610612738}/primary/L/logo.svg`} style={{
                             width: '100%',
                             height: 'auto',
                         }}
-                        width={500}
-                        height={300}
+                        width={400}
+                        height={500}
                     alt = "Photo of player">
 
                 </Image>
