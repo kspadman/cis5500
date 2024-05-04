@@ -76,7 +76,7 @@ const search_players = async function(req, res) {
   connection.query(`
     SELECT *
     FROM Players
-    WHERE Name LIKE '%${req.query.name}%'
+    WHERE Name LIKE '${req.query.name}%'
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
