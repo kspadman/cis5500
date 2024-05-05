@@ -30,9 +30,21 @@ const player = async function(req, res) {
 
 const team = async function(req, res) {
   connection.query(`
-    SELECT *
-    FROM Teams
-    WHERE TeamID = '${req.params.team_id}'
+  SELECT
+    Players.*,
+    AVG(PlayerStats.Points) AS AveragePointsPerGame,
+    AVG(PlayerStats.Rebounds) AS AverageReboundsPerGame,
+    AVG(PlayerStats.Assists) AS AverageAssistsPerGame
+  FROM
+    Players
+  INNER JOIN
+    PlayerStats ON Players.PlayerID = PlayerStats.PlayerID
+  WHERE
+    Players.TeamID = '${req.params.team_id}'
+  GROUP BY
+    Players.PlayerID, Players.Name;
+  ORDER BY
+    AveragePointsPerGame DESC;
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
