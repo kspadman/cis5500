@@ -62,7 +62,7 @@ export default function TopBar() {
     return(
     <div className = "TopBar">
         <div className = "TopBar-left">
-            <Link href = "/" className = "TopBar-link">
+            <Link href = "/players" className = "TopBar-link">
                 <div className = "TopBar-logo">
                     <div className = "TopBar-logo-img">
                         <Image src = "/pennlogo.png" style={{

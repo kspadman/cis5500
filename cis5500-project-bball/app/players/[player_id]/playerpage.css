@@ -33,3 +33,15 @@
 .PlayerPage-content {
     margin-top: 14px;
 }
+
+.PlayerPage th {
+    text-align: left;
+}
+
+.PlayerPage td {
+    width: 180px;
+}
+
+.PlayerPage-content-section-content {
+    margin-top: 10px;
+}

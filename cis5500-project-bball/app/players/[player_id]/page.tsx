@@ -16,7 +16,10 @@ export default function Page({params} : {params: {player_id: string}}) {
         Country: "Loading",
         CollegeID: "Loading",
         BirthDate: "Loading",
-        TeamID: "Loading"
+        TeamID: "Loading",
+        AveragePointsPerGame: "Loading",
+        AverageAssistsPerGame: "Loading",
+        AverageReboundsPerGame: "Loading"
     });
 
     useEffect(() => {    fetch(`http://localhost:3001/players/${player_id}`, )
@@ -39,6 +42,28 @@ export default function Page({params} : {params: {player_id: string}}) {
     var img_src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${player_id}.png`
 
     //Team and player number still not working
+
+    let table = <table className = "PlayerPage-table">
+    <thead>
+        <tr>
+            <th>Points Per Game</th>
+            <th>Assists Per Game</th>
+            <th>Rebounds Per Game</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            <tr>
+                <td className = "PlayerPage-table-ppg">{player.AveragePointsPerGame}</td>
+                <td className = "PlayerPage-table-apg">{player.AverageAssistsPerGame}</td>
+                <td className = "PlayerPage-table-rpg">{player.AverageReboundsPerGame} </td>
+                
+
+
+            </tr>
+        
+        </tbody>
+    </table>
       
     return <div className = "PlayerPage">
         <div className = "PlayerPage-top">
@@ -70,7 +95,9 @@ export default function Page({params} : {params: {player_id: string}}) {
                 <div className = "PlayerPage-content-section-header">
                     Stats
                 </div>
-    
+                <div className = "PlayerPage-content-section-content">
+                    {table}
+                </div>
             </div>
         </div>
 
