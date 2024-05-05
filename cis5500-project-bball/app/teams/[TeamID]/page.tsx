@@ -41,6 +41,21 @@ export default function Page({params} : {params: {TeamID: string}}) {
                 </div>
             </div>
         </div>
+        <div className = "TeamPage-body">
+            <div className = "TeamPage-body-section">
+                <div className = "TeamPage-body-section-title">
+                    Top Opposition Players by Team
+                </div>
+
+            </div>
+            <div className = "TeamPage-body-section">
+                <div className = "TeamPage-body-section-title">
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>)
 }
