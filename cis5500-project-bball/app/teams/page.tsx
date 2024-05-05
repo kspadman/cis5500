@@ -22,6 +22,9 @@ export default function Page() {
                 .then(res => res.json())
                 .then(data_2 => {
 
+                data_2.sort((a, b) => a.TeamName.localeCompare(b.TeamName));
+                console.log(data_2);
+
                 for (let i = 0; i < data_2.length; i++) {
                     data_1[i]["WorstOpponentTeam"] = data_2[i].TeamName;
                     data_1[i]["WorstOpponentPlayer"] = data_2[i].Name;
@@ -59,7 +62,6 @@ export default function Page() {
                         <th>Conference</th>
                         <th>Division</th>
                         <th>Toughest Opponent (ppg)</th>
-                        <th>Opponent Team</th>
                         <th>Win % | Higher FG%</th>
 
                     </tr>
@@ -90,7 +92,6 @@ export default function Page() {
                             <td className = "TeamsPage-table-conference">{team.Conference}</td>
                             <td className = "TeamsPage-table-division">{team.Division}</td>
                             <td className = "TeamsPage-table-opponent-player">{team.WorstOpponentPlayer} ({team.WorstOpponentPpg}) </td>
-                            <td className = "TeamsPage-table-opponent-team">{team.WorstOpponentTeam}</td>
                             <td className = "TeamsPage-table-opponent-winrate">{team.WinRateHigherFG}</td>
 
                         </tr>
