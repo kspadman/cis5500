@@ -108,6 +108,7 @@ const players = async function(req, res) {
     GROUP BY
         PlayerID
   ) AS PlayerAggregates ON Players.PlayerID = PlayerAggregates.PlayerID;
+  ORDER BY PlayerAggregates.AveragePointsPerGame DESC;
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
