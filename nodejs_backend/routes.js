@@ -15,9 +15,28 @@ const connection = mysql.createConnection({
 const player = async function(req, res) {
     const player_id = req.params.player_id;
     connection.query(`
-        SELECT *
-        FROM Players
-        WHERE PlayerID = '${player_id}'
+    SELECT
+      Players.*,
+      PlayerAggregates.AveragePointsPerGame,
+      PlayerAggregates.AverageReboundsPerGame,
+      PlayerAggregates.AverageAssistsPerGame
+    FROM
+        Players
+    INNER JOIN (
+        SELECT
+            PlayerID,
+            AVG(Points) AS AveragePointsPerGame,
+            AVG(Rebounds) AS AverageReboundsPerGame,
+            AVG(Assists) AS AverageAssistsPerGame
+        FROM
+            PlayerStats
+        WHERE
+            PlayerID = '${player_id}'
+        GROUP BY
+            PlayerID
+    ) AS PlayerAggregates ON Players.PlayerID = PlayerAggregates.PlayerID
+    WHERE
+    Players.PlayerID = '${player_id}';
     `, (err, data) => {
         if (err || data.length === 0) {
         console.log(err);
@@ -71,9 +90,24 @@ const teams = async function(req, res) {
 
 const players = async function(req, res) {
   connection.query(`
-    SELECT *
-    FROM Players
-    ORDER BY PlayerName ASC
+  SELECT
+    Players.*,
+    PlayerAggregates.AveragePointsPerGame,
+    PlayerAggregates.AverageReboundsPerGame,
+    PlayerAggregates.AverageAssistsPerGame
+  FROM
+    Players
+  INNER JOIN (
+    SELECT
+        PlayerID,
+        AVG(Points) AS AveragePointsPerGame,
+        AVG(Rebounds) AS AverageReboundsPerGame,
+        AVG(Assists) AS AverageAssistsPerGame
+    FROM
+        PlayerStats
+    GROUP BY
+        PlayerID
+  ) AS PlayerAggregates ON Players.PlayerID = PlayerAggregates.PlayerID;
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
