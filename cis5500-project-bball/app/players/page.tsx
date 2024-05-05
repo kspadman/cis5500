@@ -9,7 +9,10 @@ export default function Page() {
 
     const [players, setPlayers] = useState([{BirthDate: "Loading",
         CollegeID : "Loading", Country : "Loading", Height : "Loading", Name : "Loading",
-        PlayerID : "Loading", Position : "Loading", TeamID : "Loading", Weight : "Loading"
+        PlayerID : "Loading", Position : "Loading", TeamID : "Loading", Weight : "Loading",
+        AverageAssistsPerGame: "Loading",        AveragePointsPerGame: "Loading",
+        AverageReboundsPerGame: "Loading",
+
         }]);
 
 
@@ -18,6 +21,7 @@ export default function Page() {
         fetch(`http://localhost:3001/players`)
             .then(res => res.json())
             .then(data_1 => {
+                console.log(data_1)
                 setPlayers(data_1.slice(0,50));
         }).catch(error => {console.log(error)})
     }, []);
@@ -32,6 +36,7 @@ export default function Page() {
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>PPG/APG/PPG</th>
                         <th>Position</th>
                         <th>Country</th>
                         <th>College</th>
@@ -63,6 +68,13 @@ export default function Page() {
                                 </div>
 
                             </td>
+                            <td className = "PlayersPage-table-stats">
+                                {player.AveragePointsPerGame === "Loading" ? "Loading" : 
+                                (Math.round(parseFloat(player.AveragePointsPerGame) * 10) / 10).toString() + "/" + 
+                                (Math.round(parseFloat(player.AverageAssistsPerGame) * 10) / 10).toString() + "/" + 
+                                (Math.round(parseFloat(player.AverageReboundsPerGame) * 10) / 10)}
+                                
+                            </td>
                             <td className = "PlayersPage-table-position">{player.Position}</td>
                             <td className = "PlayersPage-table-country">{player.Country}</td>
                             <td className = "PlayersPage-table-college">{player.CollegeID} </td>
@@ -78,7 +90,7 @@ export default function Page() {
                                             alt = "Team logo">
                                         </Image>
                                     </Link>}
-                                    
+        
                                 </div>
                             </td>
 

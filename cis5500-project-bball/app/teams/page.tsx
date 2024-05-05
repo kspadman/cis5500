@@ -9,7 +9,7 @@ export default function Page() {
 
     const [teams, setTeams] = useState([{Name: "Loading", Conference: "Loading", 
     Division: "Loading", TeamID: "Loading", WorstOpponentTeam: "Loading", 
-    WorstOpponentPpg: "Loading", WorstOpponentPlayer: "Loading"}]);
+    WorstOpponentPpg: "Loading", WorstOpponentPlayer: "Loading", WinRateHigherFG: "Loading"}]);
 
 
     useEffect(() => {
@@ -28,8 +28,20 @@ export default function Page() {
                     data_1[i]["WorstOpponentPpg"] = Math.round(data_2[i].MaxPPG * 10) / 10;
                 }
 
-                setTeams(data_1);
-
+                fetch(`http://localhost:3001/team_win_rates`)
+                    .then(res => res.json())
+                    .then(data_3 => {
+                        console.log(data_3);
+                        for (let i = 0; i < data_3.length; i++) {
+                            for(let j = 0; j < data_3.length; j++) {
+                                if(data_1[i]["Name"] === data_3[j]["TeamName"]){
+                                    data_1[i]["WinRateHigherFG"] = (Math.round(data_3[j]["WinPercentage"] * 1000) / 10).toString() + "%";
+                                    
+                                }
+                            }
+                        }
+                        setTeams(data_1);
+                    }).catch(error => {console.log(error)});
             }).catch(error => {console.log(error)});
         }).catch(error => {console.log(error)})
     }, []);
@@ -46,8 +58,9 @@ export default function Page() {
                         <th>Team</th>
                         <th>Conference</th>
                         <th>Division</th>
-                        <th>Toughest Opposing Player (ppg)</th>
-                        <th>Toughest Opposing Team</th>
+                        <th>Toughest Opponent (ppg)</th>
+                        <th>Opponent Team</th>
+                        <th>Win % | Higher FG%</th>
 
                     </tr>
                 </thead>
@@ -78,7 +91,7 @@ export default function Page() {
                             <td className = "TeamsPage-table-division">{team.Division}</td>
                             <td className = "TeamsPage-table-opponent-player">{team.WorstOpponentPlayer} ({team.WorstOpponentPpg}) </td>
                             <td className = "TeamsPage-table-opponent-team">{team.WorstOpponentTeam}</td>
-
+                            <td className = "TeamsPage-table-opponent-winrate">{team.WinRateHigherFG}</td>
 
                         </tr>
                     ))}
