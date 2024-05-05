@@ -16,6 +16,10 @@ const player = async function(req, res) {
     const player_id = req.params.player_id;
     connection.query(`
     SELECT
+      Teams.Name AS TeamName,
+      Teams.City AS TeamCity,
+      Teams.Conference AS TeamConference,
+      Teams.Division AS TeamDivision,
       Players.*,
       PlayerAggregates.AveragePointsPerGame,
       PlayerAggregates.AverageReboundsPerGame,
@@ -35,6 +39,7 @@ const player = async function(req, res) {
         GROUP BY
             PlayerID
     ) AS PlayerAggregates ON Players.PlayerID = PlayerAggregates.PlayerID
+    JOIN Teams ON Players.TeamID = Teams.TeamID
     WHERE
     Players.PlayerID = '${player_id}';
     `, (err, data) => {
