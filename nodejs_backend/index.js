@@ -23,6 +23,7 @@ app.get('/search_players', routes.search_players);
 app.get('/top_scorers', routes.top_scorers);
 app.get('/team_win_rates', routes.team_win_rates);
 app.get('/top_players_variance', routes.top_players_variance);
+app.get('/top_player_pairs', routes.top_player_pairs);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

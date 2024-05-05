@@ -262,6 +262,52 @@ const top_players_variance = async function(req, res) {
   });
 }
 
+// COMPLEX #4
+const top_player_pairs = async function(req, res) {
+  connection.query(`
+  With GameStats AS (
+    SELECT
+        pp.Player1ID,
+        pp.Player2ID,
+        pp.Player1Name,
+        pp.Player2Name,
+        pgs1.GameID,
+        (pgs1.Points + pgs2.Points) AS TotalPoints,
+        (pgs1.Rebounds + pgs2.Rebounds) AS TotalRebounds,
+        (pgs1.Assists + pgs2.Assists) AS TotalAssists
+    FROM PlayerPairs pp
+    JOIN PlayerStats pgs1 ON pgs1.Points > 30 AND pgs1.Rebounds < 10 AND pgs1.PlayerID = pp.Player1ID
+    JOIN PlayerStats pgs2 ON pgs1.GameID = pgs2.GameID AND pgs2.Points > 30 AND pgs2.PlayerID = pp.Player2ID
+  ),
+  CombinedStats AS (
+      SELECT
+          Player1Name,
+          Player2Name,
+          GameID,
+          SUM(TotalPoints) AS SumPoints,
+          SUM(TotalRebounds) AS SumRebounds,
+          SUM(TotalAssists) AS SumAssists,
+          SUM(TotalPoints + TotalRebounds + TotalAssists) AS CombinedPerformance
+      FROM GameStats g
+      GROUP BY Player1Name, Player2Name, GameID
+  )
+  SELECT
+      Player1Name,
+      Player2Name,
+      CombinedPerformance
+  FROM CombinedStats
+  ORDER BY CombinedPerformance DESC
+  LIMIT 10;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   player,
   team,
@@ -270,7 +316,8 @@ module.exports = {
   search_players,
   top_scorers,
   team_win_rates,
-  top_players_variance
+  top_players_variance,
+  top_player_pairs
 }
 
 
