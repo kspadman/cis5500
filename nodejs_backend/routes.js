@@ -73,7 +73,7 @@ const players = async function(req, res) {
   connection.query(`
     SELECT *
     FROM Players
-    ORDER BY PlayerName ASC
+    ORDER BY Name ASC
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);

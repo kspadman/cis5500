@@ -15,6 +15,7 @@ export default function Page({params} : {params: {TeamID: string}}) {
             setTeam(data)
             console.log(team)
         })
+
     }, []);
 
 
