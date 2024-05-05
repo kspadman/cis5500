@@ -15,12 +15,14 @@ export default function Page({params} : {params: {player_id: string}}) {
         Height: "Loading",
         Country: "Loading",
         CollegeID: "Loading",
-        BirthDate: "Loading"
+        BirthDate: "Loading",
+        TeamID: "Loading"
     });
 
     useEffect(() => {    fetch(`http://localhost:3001/players/${player_id}`, )
         .then(res => res.json())
         .then(data => {
+            console.log(data);
             //Format height
             data.Height = data.Height.toString()[0] + "' " + data.Height.toString().substring(1) + "\""
 
@@ -53,7 +55,7 @@ export default function Page({params} : {params: {player_id: string}}) {
             </div>
             <div className = "PlayerPage-top-description">
                 <div className = "PlayerPage-top-name">{player.Name}</div>
-                <div className = "PlayerPage-top-info">Boston Celtics | #0 | {player.Position}</div>
+                <div className = "PlayerPage-top-info">{player.TeamID} | {player.Position}</div>
                 <div className = "PlayerPage-top-stat-summary">
                     <div className = "PlayerPage-top-stat-height">Height: {player.Height}</div>
                     <div className = "PlayerPage-top-stat-nationality">Nationality: {player.Country}</div>

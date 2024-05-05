@@ -235,7 +235,7 @@ const top_players_variance = async function(req, res) {
       SELECT
           PlayerID,
           AVG(Points) AS AvgPoints
-      FROM PlayerGamePoints
+      FROM PlayerGames
       GROUP BY PlayerID
   ), PlayerVariance AS (
       SELECT
@@ -247,7 +247,7 @@ const top_players_variance = async function(req, res) {
   )
   SELECT
       player .Name,
-      pv.Variance
+      playervariance.Variance
   FROM PlayerVariance playervariance
   JOIN Players player ON playervariance.PlayerID = player .PlayerID
   ORDER BY playervariance.Variance DESC
@@ -319,6 +319,3 @@ module.exports = {
   top_players_variance,
   top_player_pairs
 }
-
-
-
