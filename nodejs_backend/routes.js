@@ -50,6 +50,7 @@ const player = async function(req, res) {
 const team = async function(req, res) {
   connection.query(`
   SELECT
+    Teams.Name AS TeamName,
     Players.*,
     AVG(PlayerStats.Points) AS AveragePointsPerGame,
     AVG(PlayerStats.Rebounds) AS AverageReboundsPerGame,
@@ -58,6 +59,7 @@ const team = async function(req, res) {
     Players
   INNER JOIN
     PlayerStats ON Players.PlayerID = PlayerStats.PlayerID
+  JOIN Teams ON Players.TeamID = Teams.TeamID
   WHERE
     Players.TeamID = '${req.params.team_id}'
   GROUP BY
@@ -69,7 +71,7 @@ const team = async function(req, res) {
       console.log(err);
       res.json({});
     } else {
-      res.json(data[0]);
+      res.json(data);
     }
   });
 }
@@ -107,7 +109,7 @@ const players = async function(req, res) {
         PlayerStats
     GROUP BY
         PlayerID
-  ) AS PlayerAggregates ON Players.PlayerID = PlayerAggregates.PlayerID;
+  ) AS PlayerAggregates ON Players.PlayerID = PlayerAggregates.PlayerID
   ORDER BY PlayerAggregates.AveragePointsPerGame DESC;
   `, (err, data) => {
     if (err || data.length === 0) {
@@ -167,7 +169,7 @@ const top_scorers = async function(req, res) {
     GROUP BY ps.PlayerID, game.TEAM_ID
   ) ppg ON team.TeamID = ppg.TEAM_ID AND pp.MaxPPG = ppg.PPG
   JOIN Players player ON ppg.PlayerID = player.PlayerID
-  ORDER BY team.Name;
+  ORDER BY pp.MaxPPG DESC;
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
