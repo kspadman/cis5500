@@ -68,7 +68,7 @@ export default function Page() {
                             <td className = "PlayersPage-table-college">{player.CollegeID} </td>
                             <td className = "PlayersPage-table-team">
                                 <div className = "PlayersPage-table-team-logo">
-                                    <Link href = {`/teams/${player.TeamID}`}>
+                                    {player.TeamID === "Loading" ? "Loading" : <Link href = {`/teams/${player.TeamID}`}>
                                         <Image src = {`https://cdn.nba.com/logos/nba/${player.TeamID}/primary/L/logo.svg`} style={{
                                             width: '100%',
                                             height: 'auto',
@@ -77,7 +77,8 @@ export default function Page() {
                                             height={100}
                                             alt = "Team logo">
                                         </Image>
-                                    </Link>
+                                    </Link>}
+                                    
                                 </div>
                             </td>
 
