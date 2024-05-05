@@ -84,6 +84,40 @@ const team = async function(req, res) {
   });
 }
 
+const player_games = async function(req, res) {
+  connection.query(`
+  SELECT
+    Games.*,
+    PlayerStats.Points,
+    PlayerStats.Assists,
+    PlayerStats.Rebounds,
+    PlayerStats.Steals,
+    PlayerStats.Blocks,
+    PlayerStats.Turnovers,
+    PlayerStats.MinutesPlayed,
+    PlayerStats.ClutchPoints,
+    PlayerStats.FGPercentage,
+    PlayerStats.ThreePTPercentage,
+    PlayerStats.FTPercentage,
+    PlayerStats.PlayerID
+  FROM
+      PlayerStats
+  INNER JOIN
+      Games ON PlayerStats.GameID = Games.GAME_ID
+  WHERE
+      PlayerStats.PlayerID = '${req.params.player_id}'
+  ORDER BY
+      Games.GAME_DATE DESC;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 const teams = async function(req, res) {
   connection.query(`
     SELECT *
@@ -322,5 +356,6 @@ module.exports = {
   top_scorers,
   team_win_rates,
   top_players_variance,
-  top_player_pairs
+  top_player_pairs,
+  player_games
 }
