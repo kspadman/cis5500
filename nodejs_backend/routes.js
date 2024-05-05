@@ -61,7 +61,7 @@ const team = async function(req, res) {
   WHERE
     Players.TeamID = '${req.params.team_id}'
   GROUP BY
-    Players.PlayerID, Players.Name;
+    Players.PlayerID, Players.Name
   ORDER BY
     AveragePointsPerGame DESC;
   `, (err, data) => {
