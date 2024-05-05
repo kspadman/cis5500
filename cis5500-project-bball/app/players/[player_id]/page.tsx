@@ -65,7 +65,14 @@ export default function Page({params} : {params: {player_id: string}}) {
                 </div>
             </div>
         </div>
-        <div className = "PlayerPage-content"></div>
+        <div className = "PlayerPage-content">
+            <div className = "PlayerPage-content-section">
+                <div className = "PlayerPage-content-section-header">
+                    Stats
+                </div>
+    
+            </div>
+        </div>
 
     </div>
 }

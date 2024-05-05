@@ -25,3 +25,11 @@
     font-size: 2rem;
     font-weight: bold;
 }
+
+.PlayerPage-content-section-header {
+    font-size: 1.4rem;
+}
+
+.PlayerPage-content {
+    margin-top: 14px;
+}
