@@ -17,11 +17,13 @@ export default function Page({params} : {params: {player_id: string}}) {
         CollegeID: "Loading",
         BirthDate: "Loading",
         TeamID: "Loading",
+        TeamName: "Loading",
         AveragePointsPerGame: "Loading",
         AverageAssistsPerGame: "Loading",
         AverageReboundsPerGame: "Loading"
     });
 
+    //Fetch player data
     useEffect(() => {    fetch(`http://localhost:3001/players/${player_id}`, )
         .then(res => res.json())
         .then(data => {
@@ -34,36 +36,38 @@ export default function Page({params} : {params: {player_id: string}}) {
             data.BirthDate = (data.BirthDate.getMonth() + 1).toString() + "/" + 
                 data.BirthDate.getDate().toString() + "/" + data.BirthDate.getFullYear().toString();
 
+            data.AveragePointsPerGame = Math.round(data.AveragePointsPerGame * 10) / 10
+            data.AverageAssistsPerGame = Math.round(data.AverageAssistsPerGame * 10) / 10
+            data.AverageReboundsPerGame = Math.round(data.AverageReboundsPerGame * 10) / 10
+
+
             setPlayer(data);
         })
         .catch(error => console.error('Error fetching data:', error));
     }, [])
 
+    //This is the player's image
     var img_src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${player_id}.png`
 
-    //Team and player number still not working
-
+    //Creat e the table for the player's stats
     let table = <table className = "PlayerPage-table">
-    <thead>
-        <tr>
-            <th>Points Per Game</th>
-            <th>Assists Per Game</th>
-            <th>Rebounds Per Game</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-            <tr>
-                <td className = "PlayerPage-table-ppg">{player.AveragePointsPerGame}</td>
-                <td className = "PlayerPage-table-apg">{player.AverageAssistsPerGame}</td>
-                <td className = "PlayerPage-table-rpg">{player.AverageReboundsPerGame} </td>
-                
-
-
-            </tr>
-        
-        </tbody>
-    </table>
+                    <thead>
+                        <tr>
+                            <th>Points Per Game</th>
+                            <th>Assists Per Game</th>
+                            <th>Rebounds Per Game</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                        <tr>
+                            <td className = "PlayerPage-table-ppg">{player.AveragePointsPerGame}</td>
+                            <td className = "PlayerPage-table-apg">{player.AverageAssistsPerGame}</td>
+                            <td className = "PlayerPage-table-rpg">{player.AverageReboundsPerGame} </td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
       
     return <div className = "PlayerPage">
         <div className = "PlayerPage-top">
@@ -80,7 +84,7 @@ export default function Page({params} : {params: {player_id: string}}) {
             </div>
             <div className = "PlayerPage-top-description">
                 <div className = "PlayerPage-top-name">{player.Name}</div>
-                <div className = "PlayerPage-top-info">{player.TeamID} | {player.Position}</div>
+                <div className = "PlayerPage-top-info">{player.TeamName} | {player.Position}</div>
                 <div className = "PlayerPage-top-stat-summary">
                     <div className = "PlayerPage-top-stat-height">Height: {player.Height}</div>
                     <div className = "PlayerPage-top-stat-nationality">Nationality: {player.Country}</div>
