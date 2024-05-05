@@ -27,6 +27,7 @@
 }
 
 .PlayerPage-content-section-header {
+    margin-top: 20px;
     font-size: 1.4rem;
 }
 
@@ -44,4 +45,12 @@
 
 .PlayerPage-content-section-content {
     margin-top: 10px;
+}
+
+.PlayerPage-table-opponent-logo {
+    width: 40px;
+}
+
+.PlayerPage-table-opponent {
+    width: 40px;
 }

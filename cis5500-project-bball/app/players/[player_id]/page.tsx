@@ -7,6 +7,9 @@ import {useEffect, useState } from "react";
 export default function Page({params} : {params: {player_id: string}}) {
 
     const [player_id, setPlayer_id] = useState(params.player_id);
+    const [recentGames, setRecentGames] = useState([{OTHER_TEAM_ID: "Loading", Assists: "Loading", Blocks: "Loading",
+    FGPercentage: "Loading", GAME_DATE: "Loading", Points: "Loading", Rebounds: "Loading", WL: "Loading", Steals: "Loading"
+    }]);
 
     //Before data is loaded, indicate it is loading
     const [player, setPlayer] = useState({
@@ -24,7 +27,8 @@ export default function Page({params} : {params: {player_id: string}}) {
     });
 
     //Fetch player data
-    useEffect(() => {    fetch(`http://localhost:3001/players/${player_id}`, )
+    useEffect(() => {    
+        fetch(`http://localhost:3001/players/${player_id}`, )
         .then(res => res.json())
         .then(data => {
             console.log(data);
@@ -39,9 +43,18 @@ export default function Page({params} : {params: {player_id: string}}) {
             data.AveragePointsPerGame = Math.round(data.AveragePointsPerGame * 10) / 10
             data.AverageAssistsPerGame = Math.round(data.AverageAssistsPerGame * 10) / 10
             data.AverageReboundsPerGame = Math.round(data.AverageReboundsPerGame * 10) / 10
-
-
             setPlayer(data);
+
+
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+        fetch(`http://localhost:3001/players/${player_id}/games`, )
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            setRecentGames(data.slice(0,10));
+            
         })
         .catch(error => console.error('Error fetching data:', error));
     }, [])
@@ -49,8 +62,8 @@ export default function Page({params} : {params: {player_id: string}}) {
     //This is the player's image
     var img_src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${player_id}.png`
 
-    //Creat e the table for the player's stats
-    let table = <table className = "PlayerPage-table">
+    //Create the table for the player's stats
+    let table_stats = <table className = "PlayerPage-table">
                     <thead>
                         <tr>
                             <th>Points Per Game</th>
@@ -68,7 +81,48 @@ export default function Page({params} : {params: {player_id: string}}) {
                     
                     </tbody>
                 </table>
-      
+
+    //Create the table for player's last X games
+    let table_recents = <table className = "PlayerPage-table">
+                        <thead>
+                            <tr>
+                                <th>Opponent</th>
+                                <th>Win?</th>
+                                <th>Points</th>
+                                <th>Assists</th>
+                                <th>Rebounds</th>
+                                <th>Blocks</th>
+                                <th>Steals</th>
+                                <th>FG %</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {recentGames.map((game, index) => (
+                                <tr key = {index}>
+                                    <td className = "PlayerPage-table-opponent">
+                                        <div className = "PlayerPage-table-opponent-logo">{game.OTHER_TEAM_ID !== "Loading" ? 
+                                    <Image src = {`https://cdn.nba.com/logos/nba/${game.OTHER_TEAM_ID}/primary/L/logo.svg`}
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                        }}
+                                        width={100}
+                                        height={50}
+                                        alt = "Team logo">
+                                        </Image> : null}
+                                        </div></td>
+                                    <td className = "PlayerPage-table-WL">{game.WL}</td>
+                                    <td className = "PlayerPage-table-points">{game.Points} </td>
+                                    <td className = "PlayerPage-table-assists">{game.Assists} </td>
+                                    <td className = "PlayerPage-table-rebounds">{game.Rebounds} </td>
+                                    <td className = "PlayerPage-table-blocks">{game.Blocks} </td>
+                                    <td className = "PlayerPage-table-steals">{game.Steals} </td>
+                                    <td className = "PlayerPage-table-fg">{game.FGPercentage} </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                        </table>
     return <div className = "PlayerPage">
         <div className = "PlayerPage-top">
             <div className = "PlayerPage-top-img">
@@ -100,7 +154,15 @@ export default function Page({params} : {params: {player_id: string}}) {
                     Stats
                 </div>
                 <div className = "PlayerPage-content-section-content">
-                    {table}
+                    {table_stats}
+                </div>
+            </div>
+            <div className = "PlayerPage-content-section">
+                <div className = "PlayerPage-content-section-header">
+                    Last 10 Games
+                </div>
+                <div className = "PlayerPage-content-section-content">
+                    {table_recents}
                 </div>
             </div>
         </div>
