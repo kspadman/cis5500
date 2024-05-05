@@ -50,7 +50,7 @@ const player = async function(req, res) {
 const team = async function(req, res) {
   connection.query(`
   SELECT
-    Teams.Name AS TeamName,
+    Teams.*,
     Players.*,
     AVG(PlayerStats.Points) AS AveragePointsPerGame,
     AVG(PlayerStats.Rebounds) AS AverageReboundsPerGame,
