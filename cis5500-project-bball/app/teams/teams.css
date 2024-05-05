@@ -1,6 +1,5 @@
 .TeamsPage {
-    margin: 40px 50px 0px 50px;
-    width: 100%;
+    padding: 40px 50px 0px 50px;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -51,7 +50,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .TopBar-search-results {
@@ -61,4 +60,12 @@
     background-color: white;
     color: black;
     position: relative;
+}
+
+td.TeamsPage-table-conference{
+    width: 140px;
+}
+
+td.TeamsPage-table-division {
+    width: 140px;
 }

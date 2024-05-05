@@ -36,7 +36,7 @@ export default function Page() {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>PPG/APG/PPG</th>
+                        <th>PPG/APG/RPG</th>
                         <th>Position</th>
                         <th>Country</th>
                         <th>College</th>
