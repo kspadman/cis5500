@@ -384,6 +384,30 @@ const top_location_variance = async function(req, res) {
   });
 }
 
+const top_divisions = async function(req, res) {
+  connection.query(`
+  With DivisionWins AS (
+    FROM DivisionTuples f
+    JOIN Games g ON (g.TEAM_ID IN (f.Team1, f.Team2, f.Team3, f.Team4, f.Team5) AND
+                     g.OTHER_TEAM_ID NOT IN (f.Team1, f.Team2, f.Team3, f.Team4, f.Team5))
+    JOIN Teams other ON g.OTHER_TEAM_ID = other.TeamID AND other.Division NOT IN (f.Division1, f.Division2, f.Division3, f.Division4, f.Division5)
+    WHERE g.WL = 'W'
+ ),
+ SELECT Division1, Division2, Division3, Division4, Division5, MAX(Wins) as MostWins
+ FROM DivisionWins
+ GROUP BY Division1, Division2, Division3, Division4, Division5
+ ORDER BY MostWins DESC
+ LIMIT 10;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   player,
   team,
@@ -395,5 +419,6 @@ module.exports = {
   top_players_variance,
   top_player_pairs,
   player_games,
-  top_location_variance
+  top_location_variance,
+  top_divisions
 }

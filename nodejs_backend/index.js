@@ -26,6 +26,7 @@ app.get('/team_win_rates', routes.team_win_rates);
 app.get('/top_players_variance', routes.top_players_variance);
 app.get('/top_player_pairs', routes.top_player_pairs);
 app.get('/top_location_variance', routes.top_location_variance);
+app.get('/top_divisions', routes.top_divisions);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
