@@ -347,6 +347,43 @@ const top_player_pairs = async function(req, res) {
   });
 }
 
+// COMPLEX #5
+const top_location_variance = async function(req, res) {
+  connection.query(`
+  WITH LocationPoints AS (
+    SELECT
+        g.LOCATION,
+        t.Name AS TeamName,
+        pgs.Points
+    FROM Games g
+    JOIN PlayerStats pgs ON g.GAME_ID = pgs.GameID
+    JOIN Teams t ON g.TEAM_ID = t.TeamID
+    WHERE g.LOCATION IN (SELECT LOCATION FROM Games GROUP BY LOCATION ORDER BY LOCATION) -- Leveraging the index
+  ),
+  VarianceCalc AS (
+      SELECT
+          LOCATION,
+          TeamName,
+          AVG(Points * Points) - POWER(AVG(Points), 2) AS Variance -- Formula for variance
+      FROM LocationPoints
+      GROUP BY LOCATION, TeamName
+  )
+  SELECT
+      LOCATION,
+      TeamName,
+      Variance
+  FROM VarianceCalc
+  ORDER BY Variance DESC;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 module.exports = {
   player,
   team,
@@ -357,5 +394,6 @@ module.exports = {
   team_win_rates,
   top_players_variance,
   top_player_pairs,
-  player_games
+  player_games,
+  top_location_variance
 }
